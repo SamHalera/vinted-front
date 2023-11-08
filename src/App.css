@@ -1,2 +1,231 @@
 @import url("./assets/variables.css");
 /*=======GENERAL======*/
+@import url(./assets/variables.css);
+
+/*========GENRAL==========*/
+
+.container {
+  width: 1280px;
+  margin: 0 auto;
+  padding: 10px 0;
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+}
+img {
+  width: 100%;
+}
+.bg-img-settings {
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.btn-primary {
+  background-color: var(--primary-color);
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  border-radius: 6px;
+}
+a {
+  text-decoration: none;
+}
+/*========HEADER==========*/
+
+header {
+  padding: 10px 0;
+  height: 120px;
+  /* border-bottom: var(--border-bottom); */
+}
+header .container {
+  justify-content: space-between;
+}
+.logo {
+}
+
+.filters-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.search {
+}
+.filters {
+  display: flex;
+  gap: 25px;
+}
+.filters .filter-price {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.filter-range-price {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+.btn-groups {
+  display: flex;
+  gap: 35px;
+}
+
+/*========HOME==========*/
+.main-section .container {
+  justify-content: space-between;
+}
+.hero-section {
+  background-image: url(../src/assets/images/banner-hero.jpg);
+  height: 60vh;
+  background-position: center;
+}
+.ct-action {
+  width: 410px;
+  height: 270px;
+  background-color: white;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: start;
+  position: absolute;
+  top: 230px;
+  left: 120px;
+  padding: 32px;
+}
+.ct-action h2 {
+  font-size: 34px;
+  width: 80%;
+  line-height: 40px;
+  margin-bottom: 20px;
+}
+
+main {
+}
+.main-section {
+}
+.offers-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.head-section {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+.head-section h2 {
+  font-size: 28px;
+  font-weight: bold;
+}
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  gap: 15px;
+}
+.list-item {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  cursor: pointer;
+  transition: all 0.4s ease-in-out;
+}
+.list-item:hover .offer-picture {
+  opacity: 0.8;
+}
+.offer-picture {
+  /* width: 235px; */
+  aspect-ratio: 23.5/36;
+  object-fit: cover;
+  transition: all 0.4s ease-in-out;
+}
+.author {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  color: var(--p-color);
+}
+.avatar {
+  height: 30px;
+  width: 30px;
+  background-color: var(--primary-color);
+  border-radius: 50%;
+}
+
+.list-item .details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/*========ONE OFFER==========*/
+main.offer-page {
+  height: 100vh;
+  background-color: var(--bg-color);
+  padding-top: 40px;
+}
+.one-offer .container {
+  justify-content: space-around;
+}
+.one-offer .container img {
+  width: 450px;
+  aspect-ratio: 45/60;
+  object-fit: cover;
+}
+.offer-details {
+  background-color: white;
+  width: 400px;
+  aspect-ratio: 40/60;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+}
+.offer-details .details {
+  display: flex;
+  flex-direction: column;
+}
+.offer-details .details .price {
+  font-size: 24px;
+  line-height: 32px;
+  color: var(--text-color);
+  margin-bottom: 30px;
+}
+.detail-item {
+  display: flex;
+  justify-content: flex-start;
+  padding: 4px 0;
+}
+.detail-item span {
+  color: var(--p-color);
+  flex: 1 1;
+  font-size: 14px;
+  /* margin-bottom: 6px; */
+}
+.divider {
+  background: hsla(0, 0%, 7%, 0.1);
+  display: block;
+  height: 1px;
+  width: 100%;
+}
+.product-name {
+  font-size: 16px;
+  line-height: 13px;
+  font-weight: bold;
+  margin: 15px 0;
+}
+.product-description {
+  color: var(--text-color);
+  margin: 15px 0;
+}
+.product-content .avatar {
+  height: 50px;
+  width: 50px;
+}
+.product-content .author span {
+  font-size: 18px;
+}
