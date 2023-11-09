@@ -8,7 +8,7 @@ import Form from "../components/Form";
 
 const Signup = () => {
   return (
-    <main className="signup-container">
+    <main className="form-container">
       <div className="container">
         <h1>S'inscrire</h1>
 

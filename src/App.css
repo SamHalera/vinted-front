@@ -21,12 +21,18 @@ img {
 }
 .btn-primary {
   background-color: var(--primary-color);
-  border: none;
+  border: 1px solid var(--primary-color);
   padding: 10px 20px;
   font-size: 16px;
   color: white;
   border-radius: 6px;
   cursor: pointer;
+  transition: all 0.4s ease-in-out;
+}
+.btn-primary:hover {
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  background-color: white;
 }
 .danger {
   color: lightcoral;
@@ -34,6 +40,11 @@ img {
 }
 a {
   text-decoration: none;
+  color: var(--primary-color);
+  transition: all 0.4s ease-in-out;
+}
+a:hover {
+  color: rgb(5, 117, 110);
 }
 /*========HEADER==========*/
 
@@ -52,12 +63,32 @@ header .container {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  width: 35%;
+  position: relative;
 }
 .search {
+  border: none;
+  background: var(--lightgray);
+  padding: 13px 40px;
+  width: 100%;
+  border-radius: 6px;
+}
+.search::placeholder {
+  color: rgb(181, 181, 181);
+}
+.search-icon {
+  color: rgb(181, 181, 181);
+  position: absolute;
+  font-size: 20px;
+  top: 11px;
+  left: 12px;
 }
 .filters {
   display: flex;
   gap: 25px;
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--primary-color);
 }
 .filters .filter-price {
   display: flex;
@@ -83,6 +114,7 @@ header .container {
   height: 60vh;
   background-position: center;
   position: relative;
+  margin-bottom: 30px;
 }
 .hero-section > img {
   height: 100px;
@@ -107,6 +139,7 @@ header .container {
 }
 .ct-action h2 {
   font-size: 34px;
+  font-weight: 300;
   width: 80%;
   line-height: 40px;
   margin-bottom: 20px;
@@ -128,7 +161,7 @@ main {
 }
 .head-section h2 {
   font-size: 28px;
-  font-weight: bold;
+  font-weight: 300;
 }
 .list {
   display: flex;
@@ -141,7 +174,7 @@ main {
   display: flex;
   flex-direction: column;
   /* flex: 1; */
-
+  margin-bottom: 40px;
   width: calc((100% - 60px) / 5);
   cursor: pointer;
   transition: all 0.4s ease-in-out;
@@ -158,10 +191,11 @@ main {
 .author {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 15px;
+  gap: 5px;
+  margin-bottom: 9px;
   font-size: 14px;
   color: var(--p-color);
+  padding-left: 8px;
 }
 .avatar {
   height: 30px;
@@ -169,11 +203,20 @@ main {
   background-color: var(--primary-color);
   border-radius: 50%;
 }
+.author span {
+  font-size: 13px;
+  font-weight: 300;
+}
 
 .list-item .details {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
+  margin-top: 10px;
+}
+.list-item .details span {
+  color: rgb(148, 148, 148);
+  font-weight: 300;
 }
 
 /*========ONE OFFER==========*/
@@ -185,7 +228,7 @@ main.offer-page {
 .one-offer .container {
   justify-content: space-around;
 }
-.one-offer .container img {
+.one-offer .container > img {
   width: 450px;
   aspect-ratio: 45/60;
   object-fit: cover;
@@ -245,39 +288,84 @@ main.offer-page {
   font-size: 18px;
 }
 
+/*=========MODAL=========*/
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  right: 0;
+  left: 0;
+  background-color: rgb(42 174 183 / 88%);
+}
+.modal .close-circle {
+  color: var(--primary-color);
+  font-size: 30px;
+  position: absolute;
+  top: 30px;
+  right: 37px;
+  cursor: pointer;
+}
 /*========FORM==========*/
-.signup-container .container {
+.form-container .container {
   justify-content: center;
   flex-direction: column;
 }
-.signup-container h1 {
+form h1 {
   font-size: 30px;
-  margin-bottom: 30px;
 }
 form {
-  width: 600px;
+  position: relative;
+  width: 560px;
+  border: none;
+  background: white;
+  border-radius: 6px;
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 40px;
   justify-content: center;
   align-items: center;
   border: 1px solid lightgray;
-  padding: 25px 30px;
+  padding: 35px 30px;
 }
 form input {
   width: 80%;
+  font-size: 16px;
+  border: none;
+  border-bottom: 1px solid var(--primary-color);
+  padding: 15px 0;
+  color: var(--text-color);
+}
+input::placeholder {
+  color: var(--text-color);
+  font-size: 16px;
+}
+input:focus-visible {
+  outline: none;
 }
 form input[type="checkbox"] {
   width: inherit;
+  margin-right: 13px;
+}
+input[type="submit"] {
+  width: 50%;
 }
 form > div {
   display: flex;
   flex-direction: column;
+  width: 80%;
 }
 .newsletter-wrap {
   margin-bottom: 20px;
+  display: flex;
+  align-items: center;
 }
 .legal-notice {
   font-size: 14px;
+  line-height: 18px;
   color: var(--p-color);
 }

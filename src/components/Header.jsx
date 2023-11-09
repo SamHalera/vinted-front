@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import logo from "../assets/images/logo.svg";
 import Cookies from "js-cookie";
-const Header = () => {
+const Header = ({ visible, setVisible, setFormAction }) => {
   const [isHome, setIsHome] = useState(true);
   const navigate = useNavigate();
   return (
@@ -24,6 +24,7 @@ const Header = () => {
             type="text"
             placeholder="Recherche des articles"
           />
+          <i className="search-icon fas fa-search"></i>
 
           {isHome === true && (
             <div className="filters">
@@ -46,6 +47,7 @@ const Header = () => {
                 Cookies.remove("token");
                 navigate("/");
               }}
+              className="btn-primary"
             >
               Se deconnecter
             </button>
@@ -57,23 +59,31 @@ const Header = () => {
             <button
               onClick={() => {
                 setIsHome(false);
-                navigate("/signup");
+                setFormAction("signup");
+
+                setVisible(true);
+                // navigate("/signup");
               }}
+              className="btn-primary"
             >
               S'inscrire
             </button>
             <button
               onClick={() => {
                 setIsHome(false);
-                navigate("/login");
+                setFormAction("login");
+
+                setVisible(true);
+                // navigate("/login");
               }}
+              className="btn-primary"
             >
               Se connecter
             </button>
           </div>
         )}
 
-        <button>Vends tes articles</button>
+        <button className="btn-primary">Vends tes articles</button>
       </div>
     </header>
   );

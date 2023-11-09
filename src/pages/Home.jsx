@@ -74,7 +74,7 @@ const Home = () => {
                       alt=""
                     />
                     <div className="details">
-                      <span className="price">{offer.product_price} </span>
+                      <span className="price">{offer.product_price} €</span>
                       <span className="size">
                         {offer.product_details[1].TAILLE}
                       </span>

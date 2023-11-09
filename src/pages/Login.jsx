@@ -7,7 +7,7 @@ import Cookies from "js-cookie";
 import Form from "../components/Form";
 const Login = () => {
   return (
-    <main className="signup-container">
+    <main className="form-container">
       <div className="container">
         <h1>S'inscrire</h1>
 

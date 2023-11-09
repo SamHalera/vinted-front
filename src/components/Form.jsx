@@ -4,7 +4,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import CustomInput from "./CustomInput";
 
-const Form = ({ action }) => {
+const Form = ({ action, setVisible }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -39,11 +39,12 @@ const Form = ({ action }) => {
 
     if (validateForm(action)) {
       try {
-        console.log("HERE!!");
+        console.log("Just TRY!!");
+
         let objToPost = {};
         let url = "";
+
         if (action === "signup") {
-          console.log(email);
           objToPost = {
             email,
             username,
@@ -61,26 +62,27 @@ const Form = ({ action }) => {
             "https://site--backend-vinted--v5zlz7yt85wg.code.run/user/login";
         }
 
-        // console.log(objToPost, url);
-        console.log("AXIOS PRET");
+        console.log("AXIOS READY");
         const response = await axios.post(url, objToPost);
 
         console.log("AXIOS SUCCES");
 
         const token = response.data.token;
-        // console.log(token);
-        Cookies.set("token", token, { expires: 15 });
-        // setData(response.data);
 
-        //console.log("data =>", response.data.token);
-        navigate("/");
+        Cookies.set("token", token, { expires: 15 });
 
         console.log("READY TO GO!");
+
+        console.log("CLEAR FORM");
         setUsername("");
         setEmail("");
         setUsername("");
         setPassword("");
         setNewsletter(false);
+
+        console.log("BYE!!");
+        setVisible(false);
+        // navigate("/");
       } catch (error) {
         console.log(error.response.data.message);
         SetMessage(error.response.data.message);
@@ -97,8 +99,15 @@ const Form = ({ action }) => {
       onSubmit={(event) => {
         handleSubmit(event);
       }}
-      action=""
     >
+      <i
+        onClick={() => {
+          setVisible(false);
+        }}
+        className="close-circle far fa-times-circle"
+      ></i>
+
+      <h1>{action === "signup" ? "S'inscrire" : "Se connecter"}</h1>
       <div>{(error || message) && <p className="danger">{message}</p>}</div>
 
       {action === "signup" && (
@@ -148,8 +157,8 @@ const Form = ({ action }) => {
           </div>
 
           <span className="legal-notice">
-            En m'inscrivant je cofnirme avoir lu et accepté les Termes é&
-            Conditions et Politique de Confidentialité de VInted. Je confirme
+            En m'inscrivant je cofnirme avoir lu et accepté les Termes et
+            Conditions et Politique de Confidentialité de Vinted. Je confirme
             avoir au moins 18 ans
           </span>
         </div>
