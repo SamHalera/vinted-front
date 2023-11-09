@@ -77,6 +77,14 @@ header .container {
   background-image: url(../src/assets/images/banner-hero.jpg);
   height: 60vh;
   background-position: center;
+  position: relative;
+}
+.hero-section > img {
+  height: 100px;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }
 .ct-action {
   width: 410px;
@@ -88,7 +96,7 @@ header .container {
   justify-content: space-around;
   align-items: start;
   position: absolute;
-  top: 230px;
+  top: 150px;
   left: 120px;
   padding: 32px;
 }
@@ -127,7 +135,9 @@ main {
 .list-item {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  /* flex: 1; */
+
+  width: calc((100% - 60px) / 5);
   cursor: pointer;
   transition: all 0.4s ease-in-out;
 }

@@ -8,7 +8,9 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/");
+        const response = await axios.get(
+          "https://site--backend-vinted--v5zlz7yt85wg.code.run"
+        );
         console.log(response.data);
         setData(response.data);
         setIsLoading(false);
@@ -29,6 +31,10 @@ const Home = () => {
           <h2>Prêts à faire du tri dans vos placards ?</h2>
           <button className="btn-primary">Commencer à vendre</button>
         </div>
+        <img
+          src="https://lereacteur-vinted.netlify.app/static/media/tear.884480420945b3afd77b44a6c5f98567.svg"
+          alt=""
+        />
       </section>
       <section className="main-section">
         <div className="container">

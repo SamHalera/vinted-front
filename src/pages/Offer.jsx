@@ -7,17 +7,23 @@ const Offer = () => {
 
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
-
+  const [error, setError] = useState("");
+  if (error) {
+    console.log("error:", error.data.message);
+  }
   useEffect(() => {
     const fetchData = async () => {
       try {
         //"http://localhost:3000/offers/:id"
-        const response = await axios.get(`http://localhost:3000/offers/${id}`);
+        const response = await axios.get(
+          `https://site--backend-vinted--v5zlz7yt85wg.code.run/offers/${id}`
+        );
         console.log(response.data);
         setData(response.data);
         setIsLoading(false);
       } catch (error) {
-        console.log(error.response);
+        setError(error.response);
+        setIsLoading(false);
       }
     };
 
@@ -26,6 +32,8 @@ const Offer = () => {
 
   return isLoading ? (
     <p className="loading">Loading....</p>
+  ) : error ? (
+    <p>{error.data.message}</p>
   ) : (
     <main className="offer-page">
       <article className="one-offer">
