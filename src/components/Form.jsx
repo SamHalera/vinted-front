@@ -17,7 +17,7 @@ const Form = ({ action }) => {
   const validateForm = (action) => {
     console.log("HEY error");
     if (action === "signup") {
-      if (username || email || password || newsletter) {
+      if (username || email || password) {
         setError(false);
         console.log("YO!!");
         return true;
