@@ -10,11 +10,12 @@ const Form = ({ action }) => {
   const [password, setPassword] = useState("");
   const [newsletter, setNewsletter] = useState(false);
   const [error, setError] = useState(false);
+  const [message, SetMessage] = useState("");
 
-  const [data, setData] = useState();
   const navigate = useNavigate();
 
   const validateForm = (action) => {
+    console.log("HEY error");
     if (action === "signup") {
       if (username || email || password || newsletter) {
         setError(false);
@@ -27,6 +28,7 @@ const Form = ({ action }) => {
         return true;
       }
     }
+    SetMessage("Tous les champs sont obligatoires !!");
     return false;
   };
 
@@ -59,14 +61,14 @@ const Form = ({ action }) => {
             "https://site--backend-vinted--v5zlz7yt85wg.code.run/user/login";
         }
 
-        console.log(objToPost, url);
-
+        // console.log(objToPost, url);
+        console.log("AXIOS PRET");
         const response = await axios.post(url, objToPost);
 
         console.log("AXIOS SUCCES");
 
         const token = response.data.token;
-        console.log(token);
+        // console.log(token);
         Cookies.set("token", token, { expires: 15 });
         // setData(response.data);
 
@@ -80,7 +82,9 @@ const Form = ({ action }) => {
         setPassword("");
         setNewsletter(false);
       } catch (error) {
-        console.log(error.response);
+        console.log(error.response.data.message);
+        SetMessage(error.response.data.message);
+        setError(true);
       }
     }
   };
@@ -95,11 +99,7 @@ const Form = ({ action }) => {
       }}
       action=""
     >
-      <div>
-        {error && (
-          <p className="danger">Tous les champs sont obligatoires !!</p>
-        )}
-      </div>
+      <div>{(error || message) && <p className="danger">{message}</p>}</div>
 
       {action === "signup" && (
         <CustomInput
