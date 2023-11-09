@@ -1,21 +1,25 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Cookies from "js-cookie";
 const Home = () => {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
+
+  Cookies.get("token") && console.log(Cookies.get("token"));
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
+          // "http://localhost:3000/"
           "https://site--backend-vinted--v5zlz7yt85wg.code.run"
         );
         console.log(response.data);
         setData(response.data);
         setIsLoading(false);
       } catch (error) {
-        console.log(error.response);
+        console.log(error.response.data);
       }
     };
 
@@ -72,7 +76,7 @@ const Home = () => {
                     <div className="details">
                       <span className="price">{offer.product_price} </span>
                       <span className="size">
-                        {offer.product_details[1].TAILLE}{" "}
+                        {offer.product_details[1].TAILLE}
                       </span>
                       <span className="brand">
                         {offer.product_details[0].MARQUE}

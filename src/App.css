@@ -26,6 +26,11 @@ img {
   font-size: 16px;
   color: white;
   border-radius: 6px;
+  cursor: pointer;
+}
+.danger {
+  color: lightcoral;
+  font-weight: bold;
 }
 a {
   text-decoration: none;
@@ -238,4 +243,41 @@ main.offer-page {
 }
 .product-content .author span {
   font-size: 18px;
+}
+
+/*========FORM==========*/
+.signup-container .container {
+  justify-content: center;
+  flex-direction: column;
+}
+.signup-container h1 {
+  font-size: 30px;
+  margin-bottom: 30px;
+}
+form {
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid lightgray;
+  padding: 25px 30px;
+}
+form input {
+  width: 80%;
+}
+form input[type="checkbox"] {
+  width: inherit;
+}
+form > div {
+  display: flex;
+  flex-direction: column;
+}
+.newsletter-wrap {
+  margin-bottom: 20px;
+}
+.legal-notice {
+  font-size: 14px;
+  color: var(--p-color);
 }
