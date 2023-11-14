@@ -1,10 +1,9 @@
 import Form from "./Form";
 const Modal = ({
   setVisible,
-  isLoading,
-  setIsLoading,
   formAction,
   handleToken,
+  handleId,
   error,
   setError,
   errorMessage,
@@ -17,9 +16,8 @@ const Modal = ({
         <Form
           action={formAction}
           setVisible={setVisible}
-          isLoading={isLoading}
-          setIsLoading={setIsLoading}
           handleToken={handleToken}
+          handleId={handleId}
           error={error}
           setError={setError}
           errorMessage={errorMessage}

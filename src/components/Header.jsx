@@ -46,7 +46,6 @@ const Header = ({
             setSortFilter={setSortFilter}
             price={price}
             setPrice={setPrice}
-            setIsLoading={setIsLoading}
           />
         ) : (
           <div className="filters-groups"></div>
@@ -60,7 +59,7 @@ const Header = ({
                 handleToken(null);
                 navigate("/");
               }}
-              className="btn btn-secondary danger"
+              className="btn btn-secondary"
             >
               Se deconnecter
             </button>

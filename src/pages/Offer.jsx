@@ -1,9 +1,16 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import imgPlaceholder from "../assets/images/img-placeholder.png";
 import spinner from "../assets/images/spinner.gif";
-const Offer = () => {
+const Offer = ({
+  setVisible,
+  setFormAction,
+  setRequestedLink,
+  token,
+  userId,
+}) => {
+  const navigate = useNavigate();
   const { id } = useParams();
 
   const [data, setData] = useState();
@@ -50,12 +57,12 @@ const Offer = () => {
               <img className="product-image" src={imgPlaceholder} alt="" />
             )}
 
-            <div className="pictures-carousel">
-              <i className="fas fa-arrow-circle-left"></i>
-              <i className="fas fa-arrow-circle-right"></i>
-              <div>
-                {data.product_pictures.length > 0 &&
-                  data.product_pictures.map((img) => {
+            {data.product_pictures.length > 0 && (
+              <div className="pictures-carousel">
+                <i className="fas fa-arrow-circle-left"></i>
+                <i className="fas fa-arrow-circle-right"></i>
+                <div>
+                  {data.product_pictures.map((img) => {
                     return (
                       <img
                         className="item-carousel"
@@ -65,8 +72,9 @@ const Offer = () => {
                       />
                     );
                   })}
+                </div>
               </div>
-            </div>
+            )}
           </div>
 
           <div className="offer-details">
@@ -105,7 +113,29 @@ const Offer = () => {
                 <span>{data.owner.account.username}</span>
               </div>
             </div>
-            <button className="btn btn-primary">Acheter</button>
+            <button
+              onClick={() => {
+                {
+                  if (token) {
+                    navigate("/payment", {
+                      state: {
+                        name: data.product_name,
+                        price: data.product_price,
+                        description: data.product_description,
+                      },
+                    });
+                  } else {
+                    //trigger Modal
+                    setRequestedLink("/payment");
+                    setFormAction("login");
+                    setVisible(true);
+                  }
+                }
+              }}
+              className="btn btn-primary"
+            >
+              Acheter
+            </button>
           </div>
         </div>
       </article>

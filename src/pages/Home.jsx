@@ -6,8 +6,6 @@ import imgPlaceholder from "../assets/images/img-placeholder.png";
 import spinner from "../assets/images/spinner-login.gif";
 const Home = ({
   token,
-  isLoading,
-  setIsLoading,
   setFormAction,
   setVisible,
   query,
@@ -18,8 +16,8 @@ const Home = ({
   price,
   setRequestedLink,
 }) => {
-  const [data, setData] = useState();
-
+  const [data, setData] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   console.log("query in home=>", query);
@@ -92,7 +90,7 @@ const Home = ({
               </span>
             </div>
             <div className="list">
-              {data.offers && data.offers.length === 0 ? (
+              {data.offers.length === 0 ? (
                 <h3>Aucune offre n'a été trouvée!</h3>
               ) : !allOffers ? (
                 data.offers.slice(0, 10).map((offer) => {

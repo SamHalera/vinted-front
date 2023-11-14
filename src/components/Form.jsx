@@ -8,9 +8,8 @@ import spinnerLogin from "../assets/images/spinner-login.gif";
 const Form = ({
   action,
   setVisible,
-  isLoading,
-  setIsLoading,
   handleToken,
+  handleId,
   error,
   setError,
   errorMessage,
@@ -22,12 +21,12 @@ const Form = ({
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [newsletter, setNewsletter] = useState(false);
+  const [isSending, setIsSending] = useState(false);
 
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setIsLoading(true);
-
+    setIsSending(true);
     setError(false);
     setErrorMessage("");
 
@@ -66,13 +65,16 @@ const Form = ({
       const response = await axios.post(url, objToPost);
 
       console.log("AXIOS SUCCES");
-
+      console.log("USER_ID=>", response.data._id);
+      const userId = response.data._id;
       const token = response.data.token;
 
       // Cookies.set("token", token, { expires: 15 });
+      // handleCookie(object);
       handleToken(token);
+      handleId(userId);
+      // handleToken(user);
 
-      setIsLoading(false);
       console.log("CLEAR FORM");
       setUsername("");
       setEmail("");
@@ -81,7 +83,7 @@ const Form = ({
       setNewsletter(false);
 
       console.log("Close MODAL!!");
-
+      setIsSending(false);
       //Colosing modal component
       setVisible(false);
       navigate(requestedLink);
@@ -215,13 +217,12 @@ const Form = ({
         </div>
       )}
 
-      <input
-        type="submit"
-        className="btn btn-primary"
-        value={`${action === "signup" ? "S'inscrire" : "Se connecter"}`}
-        disabled={isLoading}
-      />
-      {isLoading && <img className="spinner-xs" src={spinnerLogin} alt="" />}
+      <button type="submit" className="btn btn-primary">
+        {action === "signup" ? "S'inscrire" : "Se connecter"}
+        {isSending && <img className="spinner-xs" src={spinnerLogin} alt="" />}
+      </button>
+
+      {/* {isLoading && <img className="spinner-xs" src={spinnerLogin} alt="" />} */}
 
       {action === "signup" ? (
         <Link to="/login">Tu as déjà un compte ? Connecte-toi !</Link>

@@ -2,7 +2,6 @@ import { useState, React } from "react";
 
 const FiltersGroup = ({
   setSortFilter,
-  setIsLoading,
   titleFilter,
   setTitleFilter,
   price,
