@@ -3,7 +3,7 @@ import axios from "axios";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import spinner from "../assets/images/spinner-login.gif";
 import { Link } from "react-router-dom";
-const CheckoutForm = ({ userId, name, price }) => {
+const CheckoutForm = ({ userId, name, price, productId }) => {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -25,6 +25,7 @@ const CheckoutForm = ({ userId, name, price }) => {
 
     const response = await axios.post("http://localhost:3000/payment", {
       stripeToken,
+      productId,
       name,
       price,
     });
@@ -48,7 +49,7 @@ const CheckoutForm = ({ userId, name, price }) => {
           </button>
         </form>
       ) : (
-        <div className="feddback">
+        <div className="feedback">
           <h1>Merci pour votre achat!!</h1>
           <p>Le produit sera bientôt livré chez vous!! 🚚</p>
           <Link to="/" className="btn btn-primary">

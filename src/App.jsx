@@ -99,15 +99,7 @@ function App() {
           />
           <Route
             path="/offers/:id"
-            element={
-              <Offer
-                token={token}
-                userId={userId}
-                setVisible={setVisible}
-                setFormAction={setFormAction}
-                setRequestedLink={setRequestedLink}
-              />
-            }
+            element={<Offer token={token} userId={userId} />}
           />
           <Route path="/publish" element={<Publish token={token} />} />
           <Route

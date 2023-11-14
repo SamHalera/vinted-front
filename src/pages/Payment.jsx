@@ -9,7 +9,7 @@ const stripePromise = loadStripe(
 const Payment = ({ token, userId }) => {
   const location = useLocation();
   console.log(location.state);
-  const { name, price, description } = location.state;
+  const { productId, name, price, description } = location.state;
 
   console.log("ecco");
   return token ? (
@@ -45,7 +45,12 @@ const Payment = ({ token, userId }) => {
           </p>
         </div>
         <Elements stripe={stripePromise}>
-          <CheckoutForm userId={userId} price={price} name={name} />
+          <CheckoutForm
+            userId={userId}
+            price={price}
+            name={name}
+            productId={productId}
+          />
         </Elements>
       </div>
     </main>

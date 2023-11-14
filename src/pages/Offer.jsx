@@ -113,7 +113,19 @@ const Offer = ({
                 <span>{data.owner.account.username}</span>
               </div>
             </div>
-            <button
+            <Link
+              className="btn btn-primary"
+              to={"/payment"}
+              state={{
+                productId: data._id,
+                name: data.product_name,
+                price: data.product_price,
+                description: data.product_description,
+              }}
+            >
+              Acheter
+            </Link>
+            {/* <button
               onClick={() => {
                 {
                   if (token) {
@@ -133,9 +145,9 @@ const Offer = ({
                 }
               }}
               className="btn btn-primary"
-            >
+            > 
               Acheter
-            </button>
+            </button>*/}
           </div>
         </div>
       </article>
