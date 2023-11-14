@@ -1,7 +1,4 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import Cookies from "js-cookie";
+//Component No longer used. Use Modal instead
 
 //Components
 import Form from "../components/Form";

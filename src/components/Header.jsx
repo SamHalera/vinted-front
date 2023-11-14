@@ -1,89 +1,112 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import FiltersGroup from "./FiltersGroup";
+
 import logo from "../assets/images/logo.svg";
-import Cookies from "js-cookie";
-const Header = ({ visible, setVisible, setFormAction }) => {
-  const [isHome, setIsHome] = useState(true);
+
+const Header = ({
+  setVisible,
+  setIsLoading,
+  setFormAction,
+  token,
+  handleToken,
+  sortFilter,
+  setSortFilter,
+  titleFilter,
+  setTitleFilter,
+  price,
+  setPrice,
+  requestedLink,
+  setRequestedLink,
+}) => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  console.log(location);
+
+  if (location.pathname === "/") {
+    console.log("HOME");
+  }
   return (
     <header>
       <div className="container">
         <div className="logo">
           <div
             onClick={() => {
-              setIsHome(true);
               navigate("/");
             }}
           >
             <img src={logo} alt="" />
           </div>
         </div>
-        <div className="filters-groups">
-          <input
-            className="search"
-            type="text"
-            placeholder="Recherche des articles"
+        {location.pathname === "/" ? (
+          <FiltersGroup
+            titleFilter={titleFilter}
+            setTitleFilter={setTitleFilter}
+            sortFilter={sortFilter}
+            setSortFilter={setSortFilter}
+            price={price}
+            setPrice={setPrice}
+            setIsLoading={setIsLoading}
           />
-          <i className="search-icon fas fa-search"></i>
+        ) : (
+          <div className="filters-groups"></div>
+        )}
 
-          {isHome === true && (
-            <div className="filters">
-              <div className="filter-price">
-                <label htmlFor="price">Trier par prix</label>
-                <input type="checkbox" id="price" />
-              </div>
-              <div className="filter-range-price">
-                <label htmlFor="range">Prix entre</label>
-                <input type="range" id="range" min="10" max="1000" />
-              </div>
-            </div>
-          )}
-        </div>
-
-        {Cookies.get("token") ? (
+        {token ? (
           <div className="btn-groups">
             <button
               onClick={() => {
-                Cookies.remove("token");
+                // Cookies.remove("token");
+                handleToken(null);
                 navigate("/");
               }}
-              className="btn-primary"
+              className="btn btn-secondary danger"
             >
               Se deconnecter
             </button>
           </div>
         ) : (
           <div className="btn-groups">
-            {/* <Link to={"/signup"}>S'incrire</Link> */}
-
             <button
               onClick={() => {
-                setIsHome(false);
                 setFormAction("signup");
-
+                //trigger Modal
                 setVisible(true);
-                // navigate("/signup");
               }}
-              className="btn-primary"
+              className="btn btn-secondary"
             >
               S'inscrire
             </button>
             <button
               onClick={() => {
-                setIsHome(false);
                 setFormAction("login");
-
+                //trigger Modal
                 setVisible(true);
-                // navigate("/login");
               }}
-              className="btn-primary"
+              className="btn btn-secondary"
             >
               Se connecter
             </button>
           </div>
         )}
 
-        <button className="btn-primary">Vends tes articles</button>
+        <button
+          onClick={() => {
+            if (token) {
+              navigate("/publish");
+            } else {
+              //trigger Modal
+              setRequestedLink("/publish");
+              setFormAction("login");
+              setVisible(true);
+            }
+          }}
+          className="btn btn-primary"
+        >
+          Vends tes articles
+        </button>
+
+        <div className="user-profile"></div>
       </div>
     </header>
   );

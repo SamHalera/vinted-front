@@ -1,0 +1,16 @@
+Liste A FAIRE
+* utiliser la même route api /offers pour la home et l'éventuelle page front /offers
+     ==> pas besoi de créer une route api "/" dans laquelle on duplique le code de "/offers"
+* vérifier dans l'api back, si le query est une chaine vide ==> il faut rnevoyer la response comme s'il y avait pas de query
+* cleaner App.jsx (vérifier tous les console.log...)
+* créer des méthodes séparés pour chaque onChenge des inputs des filtres
+* chainer les query pour la req en home après filtres
+* cleaner les codes du backend (trard commentaires --> en anglais)
+* coté API créeer des utils pour : 
+                        - vérification des infos offers 
+                        - vérification des infos users
+
+
+* Côté BAckEnd créer une route pou gérer le peiement et l'échange de token avec STRIPE
+
+côté back la clé secrete on la ca che dans le .env

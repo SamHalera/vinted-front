@@ -1,92 +1,103 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Cookies from "js-cookie";
 import CustomInput from "./CustomInput";
 
-const Form = ({ action, setVisible }) => {
+import spinnerLogin from "../assets/images/spinner-login.gif";
+
+const Form = ({
+  action,
+  setVisible,
+  isLoading,
+  setIsLoading,
+  handleToken,
+  error,
+  setError,
+  errorMessage,
+  setErrorMessage,
+  requestedLink,
+}) => {
+  const [profilePicture, setProfilePicture] = useState();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [newsletter, setNewsletter] = useState(false);
-  const [error, setError] = useState(false);
-  const [message, SetMessage] = useState("");
 
   const navigate = useNavigate();
-
-  const validateForm = (action) => {
-    console.log("HEY error");
-    if (action === "signup") {
-      if (username || email || password) {
-        setError(false);
-        console.log("YO!!");
-        return true;
-      }
-    } else if (action === "login") {
-      if (email || password) {
-        setError(false);
-        return true;
-      }
-    }
-    SetMessage("Tous les champs sont obligatoires !!");
-    return false;
-  };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
 
-    console.log("Submitted!!");
+    setError(false);
+    setErrorMessage("");
 
-    if (validateForm(action)) {
-      try {
-        console.log("Just TRY!!");
+    console.log("Form Submitted...");
 
-        let objToPost = {};
-        let url = "";
+    try {
+      console.log("Inside TRY!!");
 
-        if (action === "signup") {
-          objToPost = {
-            email,
-            username,
-            password,
-            newsletter,
-          };
-          url =
-            "https://site--backend-vinted--v5zlz7yt85wg.code.run/user/signup";
-        } else {
-          objToPost = {
-            email,
-            password,
-          };
-          url =
-            "https://site--backend-vinted--v5zlz7yt85wg.code.run/user/login";
-        }
+      let objToPost;
+      let url = "";
 
-        console.log("AXIOS READY");
-        const response = await axios.post(url, objToPost);
+      if (action === "signup") {
+        const formData = new FormData();
+        formData.append("avatar", profilePicture);
+        formData.append("email", email);
+        formData.append("username", username);
+        formData.append("password", password);
+        formData.append("newsletter", newsletter);
+        objToPost = formData;
+        // objToPost = {
+        //   email,
+        //   username,
+        //   password,
+        //   newsletter,
+        // };
+        url = "http://localhost:3000/user/signup";
+      } else {
+        objToPost = {
+          email,
+          password,
+        };
+        url = "http://localhost:3000/user/login";
+      }
 
-        console.log("AXIOS SUCCES");
+      console.log("AXIOS READY");
+      const response = await axios.post(url, objToPost);
 
-        const token = response.data.token;
+      console.log("AXIOS SUCCES");
 
-        Cookies.set("token", token, { expires: 15 });
+      const token = response.data.token;
 
-        console.log("READY TO GO!");
+      // Cookies.set("token", token, { expires: 15 });
+      handleToken(token);
 
-        console.log("CLEAR FORM");
-        setUsername("");
-        setEmail("");
-        setUsername("");
-        setPassword("");
-        setNewsletter(false);
+      setIsLoading(false);
+      console.log("CLEAR FORM");
+      setUsername("");
+      setEmail("");
+      setUsername("");
+      setPassword("");
+      setNewsletter(false);
 
-        console.log("BYE!!");
-        setVisible(false);
-        // navigate("/");
-      } catch (error) {
-        console.log(error.response.data.message);
-        SetMessage(error.response.data.message);
-        setError(true);
+      console.log("Close MODAL!!");
+
+      //Colosing modal component
+      setVisible(false);
+      navigate(requestedLink);
+    } catch (error) {
+      console.log(error.response.data.message);
+
+      // setErrorMessage(error.response.data.message);
+      setError(true);
+
+      if (error.response.data.message === "All fields are required!") {
+        // Je met à jour mon state errorMessage
+        setErrorMessage("Please fill in all fields");
+      } else if (error.response.status === 409) {
+        setErrorMessage(
+          "This email already has an account, please use another one :)"
+        );
       }
     }
   };
@@ -96,6 +107,7 @@ const Form = ({ action, setVisible }) => {
 
   return (
     <form
+      className="modal-form"
       onSubmit={(event) => {
         handleSubmit(event);
       }}
@@ -108,42 +120,81 @@ const Form = ({ action, setVisible }) => {
       ></i>
 
       <h1>{action === "signup" ? "S'inscrire" : "Se connecter"}</h1>
-      <div>{(error || message) && <p className="danger">{message}</p>}</div>
+      <div>
+        {(error || errorMessage) && <p className="danger">{errorMessage}</p>}
+      </div>
+      <div className="first-section">
+        {action === "signup" && (
+          <div className="profile">
+            <label htmlFor="files">
+              <i className="fas fa-plus"></i> photo de profile
+            </label>
+            <input
+              id="files"
+              type="file"
+              onChange={(event) => {
+                console.log(event);
+                setProfilePicture(event.target.files[0]);
+              }}
+            />
+
+            <div className="preview-container">
+              {profilePicture && (
+                <div>
+                  <i
+                    onClick={() => {
+                      setProfilePicture();
+                    }}
+                    className="close-circle fas fa-times-circle"
+                  ></i>
+                  <img
+                    className="preview"
+                    src={URL.createObjectURL(profilePicture)}
+                    alt=""
+                  />
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        <div className="all-inputs">
+          {action === "signup" && (
+            <CustomInput
+              inputValue={username}
+              setState={setUsername}
+              type="text"
+              placeholder="Nom d'utilisateur"
+              label="username"
+              title=""
+              handleChangeInput={handleChangeInput}
+            />
+          )}
+
+          <CustomInput
+            inputValue={email}
+            setState={setEmail}
+            type="email"
+            placeholder="Email"
+            label="email"
+            title=""
+            handleChangeInput={handleChangeInput}
+          />
+
+          <CustomInput
+            inputValue={password}
+            setState={setPassword}
+            type="password"
+            placeholder="Mot de passe"
+            label="password"
+            title=""
+            handleChangeInput={handleChangeInput}
+          />
+        </div>
+      </div>
 
       {action === "signup" && (
-        <CustomInput
-          inputValue={username}
-          setState={setUsername}
-          type="text"
-          placeholder="Nom d'utilisateur"
-          label="username"
-          title=""
-          handleChangeInput={handleChangeInput}
-        />
-      )}
-
-      <CustomInput
-        inputValue={email}
-        setState={setEmail}
-        type="email"
-        placeholder="Email"
-        label="email"
-        title=""
-        handleChangeInput={handleChangeInput}
-      />
-
-      <CustomInput
-        inputValue={password}
-        setState={setPassword}
-        type="password"
-        placeholder="Mot de passe"
-        label="password"
-        title=""
-        handleChangeInput={handleChangeInput}
-      />
-
-      {action === "signup" && (
-        <div>
+        <div className="newsletter-container">
           <div className="newsletter-wrap">
             <input
               onChange={() => {
@@ -151,9 +202,9 @@ const Form = ({ action, setVisible }) => {
               }}
               type="checkbox"
               id="newsletter"
-              value={newsletter}
+              checked={newsletter}
             />
-            <label htmlFor="newsletter">S'inscrire à la newsletter</label>
+            <label htmlFor="newsletter">S'inscrire à notre newsletter</label>
           </div>
 
           <span className="legal-notice">
@@ -166,9 +217,11 @@ const Form = ({ action, setVisible }) => {
 
       <input
         type="submit"
-        className="btn-primary"
+        className="btn btn-primary"
         value={`${action === "signup" ? "S'inscrire" : "Se connecter"}`}
+        disabled={isLoading}
       />
+      {isLoading && <img className="spinner-xs" src={spinnerLogin} alt="" />}
 
       {action === "signup" ? (
         <Link to="/login">Tu as déjà un compte ? Connecte-toi !</Link>
