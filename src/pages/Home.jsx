@@ -29,7 +29,7 @@ const Home = ({
           //query props comes from App.jsx from filters called in the header
           //If filters are not user query will be an empty string and we retrieve all offers
           //if filters are used query will contain the string with all the query values
-          `http://localhost:3000/?title=${titleFilter}&sort=${sortFilter}`
+          `https://site--backend-vinted--v5zlz7yt85wg.code.run/?title=${titleFilter}&sort=${sortFilter}`
         );
         console.log(response.data);
 

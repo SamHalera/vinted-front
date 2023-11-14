@@ -23,12 +23,15 @@ const CheckoutForm = ({ userId, name, price, productId }) => {
 
     const stripeToken = stripeRespose.token.id;
 
-    const response = await axios.post("http://localhost:3000/payment", {
-      stripeToken,
-      productId,
-      name,
-      price,
-    });
+    const response = await axios.post(
+      "https://site--backend-vinted--v5zlz7yt85wg.code.run/payment",
+      {
+        stripeToken,
+        productId,
+        name,
+        price,
+      }
+    );
     console.log("response here:", response.data.response.status);
 
     if (response.data.response.status === "succeeded") {

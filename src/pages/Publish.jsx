@@ -64,7 +64,7 @@ const Publish = ({ token }) => {
         }
 
         const response = await axios.post(
-          "http://localhost:3000/offer/publish",
+          "https://site--backend-vinted--v5zlz7yt85wg.code.run/publish",
           formData,
           {
             headers: {

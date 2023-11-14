@@ -23,7 +23,9 @@ const Offer = ({
     const fetchData = async () => {
       try {
         //"http://localhost:3000/offers/:id"
-        const response = await axios.get(`http://localhost:3000/offers/${id}`);
+        const response = await axios.get(
+          `https://site--backend-vinted--v5zlz7yt85wg.code.run/offers/${id}`
+        );
         // console.log(response.data);
         setData(response.data);
         setIsLoading(false);

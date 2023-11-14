@@ -52,13 +52,13 @@ const Form = ({
         //   password,
         //   newsletter,
         // };
-        url = "http://localhost:3000/user/signup";
+        url = "https://site--backend-vinted--v5zlz7yt85wg.code.run/user/signup";
       } else {
         objToPost = {
           email,
           password,
         };
-        url = "http://localhost:3000/user/login";
+        url = "https://site--backend-vinted--v5zlz7yt85wg.code.run/user/login";
       }
 
       console.log("AXIOS READY");
