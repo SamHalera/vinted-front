@@ -1,15 +1,18 @@
 import { useState } from "react";
 import axios from "axios";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
+import spinner from "../assets/images/spinner-login.gif";
+import { Link } from "react-router-dom";
 const CheckoutForm = ({ userId, name, price }) => {
   const stripe = useStripe();
   const elements = useElements();
 
   const [completed, setCompleted] = useState(false);
+  const [isSending, setIsSending] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    setIsSending(true);
     //user/buyer card infos
     const cardElement = elements.getElement(CardElement);
 
@@ -30,6 +33,7 @@ const CheckoutForm = ({ userId, name, price }) => {
     if (response.data.response.status === "succeeded") {
       console.log("SUCCES HERE!!");
       setCompleted(true);
+      setIsSending(false);
     }
     console.log(completed);
   };
@@ -38,10 +42,19 @@ const CheckoutForm = ({ userId, name, price }) => {
       {!completed ? (
         <form onSubmit={handleSubmit} action="">
           <CardElement />
-          <button type="submit">Valider</button>
+          <button type="submit">
+            Valider{" "}
+            {isSending && <img className="spinner-xs" src={spinner} alt="" />}
+          </button>
         </form>
       ) : (
-        <span>Paiement effectué!</span>
+        <div className="feddback">
+          <h1>Merci pour votre achat!!</h1>
+          <p>Le produit sera bientôt livré chez vous!! 🚚</p>
+          <Link to="/" className="btn btn-primary">
+            Regardez d'autres offers
+          </Link>
+        </div>
       )}
     </div>
   );

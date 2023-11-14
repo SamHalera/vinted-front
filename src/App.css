@@ -3,6 +3,9 @@
 @import url(./assets/variables.css);
 
 /*========GENRAL==========*/
+html {
+  scroll-behavior: smooth;
+}
 .spinner {
   display: flex;
   justify-content: center;
@@ -576,7 +579,7 @@ form.modal-form > .all-input {
   flex-direction: column;
   width: 80%;
 }
-.modal .spinner-xs {
+.spinner-xs {
   width: 19px;
   margin-left: 13px;
 }
@@ -790,4 +793,14 @@ main.payment-container {
   padding: 19px;
   height: auto;
   box-shadow: 0px 0px 20px #d3d3d378;
+}
+.feedback {
+  padding: 20px;
+  font-size: 19px;
+  line-height: 30px;
+  color: var(--primary-color);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
 }

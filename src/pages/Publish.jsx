@@ -1,8 +1,10 @@
 import { useState } from "react";
 import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
+import spinnerLogin from "../assets/images/spinner-login.gif";
 
 const Publish = ({ token }) => {
+  const [isSending, setIsSending] = useState(false);
   const [title, setTitle] = useState("");
   const [picture, setPicture] = useState();
 
@@ -17,43 +19,65 @@ const Publish = ({ token }) => {
   const [color, setColor] = useState("");
   const [paymentMode, setPaymentMode] = useState("");
   const [exchange, setExchange] = useState(false);
+  const [error, setError] = useState(false);
 
   const navigate = useNavigate();
-  console.log("pictures ", pictures);
-
-  console.log("previews:", previews);
+  const fadeMainError = () => {
+    setTimeout(() => {
+      setError(false);
+    }, 2000);
+  };
   const handlePublishOffer = async (event) => {
     event.preventDefault();
+    setIsSending(true);
     try {
       console.log("hello submit");
-      const formData = new FormData();
-      formData.append("title", title);
-      formData.append("description", description);
-      formData.append("price", price);
-      formData.append("condition", condition);
-      formData.append("city", city);
-      formData.append("brand", brand);
-      formData.append("size", size);
-      formData.append("color", color);
-      formData.append("payment", paymentMode);
-      formData.append("exchange", exchange);
-      formData.append("picture", picture);
-      for (let i = 0; i < pictures.length; i++) {
-        formData.append("pictures", pictures[i]);
-      }
 
-      const response = await axios.post(
-        "http://localhost:3000/offer/publish",
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
+      if (
+        !title ||
+        !description ||
+        !price ||
+        !condition ||
+        !city ||
+        !brand ||
+        !picture
+      ) {
+        setError(true);
+        setIsSending(false);
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+      } else {
+        const formData = new FormData();
+        formData.append("title", title);
+        formData.append("description", description);
+        formData.append("price", price);
+        formData.append("condition", condition);
+        formData.append("city", city);
+        formData.append("brand", brand);
+        formData.append("size", size);
+        formData.append("color", color);
+        formData.append("payment", paymentMode);
+        formData.append("exchange", exchange);
+        formData.append("picture", picture);
+        for (let i = 0; i < pictures.length; i++) {
+          formData.append("pictures", pictures[i]);
         }
-      );
-      console.log(response);
-      navigate(`/offers/${response.data._id}`);
+
+        const response = await axios.post(
+          "http://localhost:3000/offer/publish",
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        setIsSending(false);
+        console.log(response);
+        navigate(`/offers/${response.data._id}`);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -79,6 +103,9 @@ const Publish = ({ token }) => {
                   }}
                 />
               </div>
+              {!picture && error && (
+                <p className="danger">Ce champs est obligatoire</p>
+              )}
             </div>
 
             <div className="preview-container">
@@ -152,6 +179,9 @@ const Publish = ({ token }) => {
           <div className="title-content">
             <div className="title">
               <label htmlFor="title">Titre</label>
+              {!title && error && (
+                <p className="danger">Ce champs est obligatoire</p>
+              )}
               <input
                 onChange={(event) => {
                   setTitle(event.target.value);
@@ -164,6 +194,9 @@ const Publish = ({ token }) => {
             </div>
             <div className="content">
               <label htmlFor="title">Décris ton article</label>
+              {!description && error && (
+                <p className="danger">Ce champs est obligatoire</p>
+              )}
               <textarea
                 onChange={(event) => {
                   setDescription(event.target.value);
@@ -179,6 +212,9 @@ const Publish = ({ token }) => {
           <div className="details-info">
             <div className="brand">
               <label htmlFor="brand">Marque</label>
+              {!brand && error && (
+                <p className="danger">Ce champs est obligatoire</p>
+              )}
               <input
                 onChange={(event) => {
                   setBrand(event.target.value);
@@ -207,6 +243,9 @@ const Publish = ({ token }) => {
             </div>
             <div className="condition">
               <label htmlFor="condition">Etat</label>
+              {!condition && error && (
+                <p className="danger">Ce champs est obligatoire</p>
+              )}
               <input
                 onChange={(event) => {
                   setCondition(event.target.value);
@@ -219,6 +258,9 @@ const Publish = ({ token }) => {
             </div>
             <div className="city">
               <label htmlFor="city">Lieu</label>
+              {!city && error && (
+                <p className="danger">Ce champs est obligatoire</p>
+              )}
               <input
                 onChange={(event) => {
                   setCity(event.target.value);
@@ -233,6 +275,9 @@ const Publish = ({ token }) => {
           <div className="price-info">
             <div className="price">
               <label htmlFor="price">Prix</label>
+              {!price && error && (
+                <p className="danger">Ce champs est obligatoire</p>
+              )}
               <input
                 onChange={(event) => {
                   setPrice(event.target.value);
@@ -269,7 +314,19 @@ const Publish = ({ token }) => {
               </label>
             </div>
           </div>
-          <input className="btn btn-primary" type="submit" value="Ajouter" />
+
+          {/* {error && (
+            <p className="danger">
+              Oups! tu as oublié de remplir quelque champs .... ☝
+            </p>
+          )} */}
+          <button className="btn btn-primary" type="submit">
+            Ajouter
+            {isSending && (
+              <img className="spinner-xs" src={spinnerLogin} alt="" />
+            )}
+          </button>
+          {/* <input className="btn btn-primary" type="submit" value="Ajouter" /> */}
         </form>
       </div>
     </main>
