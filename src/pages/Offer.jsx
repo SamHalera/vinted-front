@@ -61,8 +61,8 @@ const Offer = ({
 
             {data.product_pictures.length > 0 && (
               <div className="pictures-carousel">
-                <i className="fas fa-arrow-circle-left"></i>
-                <i className="fas fa-arrow-circle-right"></i>
+                {/* <i className="fas fa-arrow-circle-left"></i>
+                <i className="fas fa-arrow-circle-right"></i> */}
                 <div>
                   {data.product_pictures.map((img) => {
                     return (
