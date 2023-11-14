@@ -14,6 +14,7 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Publish from "./pages/Publish";
 import Payment from "./pages/Payment";
+import NotFound from "./pages/NotFound";
 
 //Static assets
 import "./App.css";
@@ -79,8 +80,9 @@ function App() {
           setRequestedLink={setRequestedLink}
         />
         <Routes>
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
+          {/* we use modal for login and signup */}
+          {/* <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} /> */}
           <Route
             path="/"
             element={
@@ -113,6 +115,7 @@ function App() {
               />
             }
           />
+          <Route path="*" element={<NotFound />} />
         </Routes>
         {visible && (
           <Modal

@@ -804,3 +804,28 @@ main.payment-container {
   gap: 20px;
   align-items: center;
 }
+
+.not-found {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+
+  margin-top: 107px;
+}
+.not-found > div {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+.not-found h1 {
+  font-size: 30px;
+}
+.not-found h2 {
+  font-size: 28px;
+}
+.not-found a {
+  text-align: center;
+  width: 300px;
+  margin: 0 auto;
+}
