@@ -5,7 +5,6 @@ import logo from "../assets/images/logo.svg";
 
 const Header = ({
   setVisible,
-  setIsLoading,
   setFormAction,
   token,
   handleToken,
@@ -17,6 +16,8 @@ const Header = ({
   setPrice,
   requestedLink,
   setRequestedLink,
+  isLoadingData,
+  setIsLoadingData,
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -46,6 +47,8 @@ const Header = ({
             setSortFilter={setSortFilter}
             price={price}
             setPrice={setPrice}
+            isLoadingData={isLoadingData}
+            setIsLoadingData={setIsLoadingData}
           />
         ) : (
           <div className="filters-groups"></div>

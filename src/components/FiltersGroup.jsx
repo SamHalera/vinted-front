@@ -1,4 +1,5 @@
 import { useState, React } from "react";
+import spinnerLogin from "../assets/images/spinner-login.gif";
 
 const FiltersGroup = ({
   setSortFilter,
@@ -6,8 +7,11 @@ const FiltersGroup = ({
   setTitleFilter,
   price,
   setPrice,
+  isLoadingData,
+  setIsLoadingData,
 }) => {
   const [trigger, setTrigger] = useState(false);
+
   // const [page, setPage] = useState();
   // const [limit, setLimit] = useState();
 
@@ -15,16 +19,19 @@ const FiltersGroup = ({
 
   return (
     <div className="filters-groups">
-      <input
-        onChange={(event) => {
-          setTitleFilter(event.target.value);
-        }}
-        className="search"
-        type="text"
-        placeholder="Recherche des articles"
-        value={titleFilter}
-      />
-      <i className="search-icon fas fa-search"></i>
+      <div>
+        <input
+          onChange={(event) => {
+            setTitleFilter(event.target.value);
+            setIsLoadingData(true);
+          }}
+          className="search"
+          type="text"
+          placeholder="Recherche des articles"
+          value={titleFilter}
+        />
+        <i className="search-icon fas fa-search"></i>
+      </div>
 
       <div className="filters">
         <div className="filter-price">
@@ -32,6 +39,7 @@ const FiltersGroup = ({
           <span>Trier par prix</span>
           <div
             onClick={(event) => {
+              setIsLoadingData(true);
               if (trigger === false) {
                 setSortFilter("price-desc");
 
@@ -103,6 +111,9 @@ const FiltersGroup = ({
           />
         </div> */}
       </div>
+      {isLoadingData && (
+        <img className="spinner-xs" src={spinnerLogin} alt="" />
+      )}
     </div>
   );
 };

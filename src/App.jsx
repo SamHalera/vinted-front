@@ -21,7 +21,7 @@ import "./App.css";
 
 function App() {
   const [visible, setVisible] = useState(false);
-
+  const [isLoadingData, setIsLoadingData] = useState(false);
   const [formAction, setFormAction] = useState("");
   const [token, setToken] = useState(Cookies.get("token") || null);
   const [userId, setUserId] = useState(Cookies.get("userId") || null);
@@ -78,6 +78,8 @@ function App() {
           setPrice={setPrice}
           requestedLink={requestedLink}
           setRequestedLink={setRequestedLink}
+          isLoadingData={isLoadingData}
+          setIsLoadingData={setIsLoadingData}
         />
         <Routes>
           {/* we use modal for login and signup */}
@@ -87,6 +89,8 @@ function App() {
             path="/"
             element={
               <Home
+                isLoadingData={isLoadingData}
+                setIsLoadingData={setIsLoadingData}
                 token={token}
                 setFormAction={setFormAction}
                 setVisible={setVisible}

@@ -15,6 +15,8 @@ const Home = ({
   titleFilter,
   price,
   setRequestedLink,
+  isLoadingData,
+  setIsLoadingData,
 }) => {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -35,6 +37,7 @@ const Home = ({
 
         setData(response.data);
         setIsLoading(false);
+        setIsLoadingData(false);
       } catch (error) {
         console.log(error.response.data, "mess");
       }
